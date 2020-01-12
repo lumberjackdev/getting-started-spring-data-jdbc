@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: template-app
+  datasource:
+    url: jdbc:postgresql://localhost:5432/demo_app?currentSchema=app
+    username: app_user
+    password: change_me
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      connection-timeout: 60000
+      validation-timeout: 60000
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    database: postgresql
+    properties:
+      hibernate:
+        jdbc:
+          lob.non_contextual_creation: true
