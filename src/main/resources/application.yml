@@ -6,14 +6,14 @@ spring:
     username: app_user
     password: change_me
     driver-class-name: org.postgresql.Driver
-    hikari:
-      connection-timeout: 60000
-      validation-timeout: 60000
-  jpa:
-    hibernate:
-      ddl-auto: validate
-    database: postgresql
-    properties:
-      hibernate:
-        jdbc:
-          lob.non_contextual_creation: true
+  flyway:
+    schemas:
+      - app
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: '*'
