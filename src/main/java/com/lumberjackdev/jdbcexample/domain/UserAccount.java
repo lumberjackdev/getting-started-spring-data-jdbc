@@ -5,19 +5,18 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
-
-import java.time.Instant;
+import org.springframework.data.relational.core.mapping.MappedCollection;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Book implements GeneratedId {
+public class UserAccount implements GeneratedId {
     @Id
     private String id;
-    private String title;
-    private String author;
-    private String isbn;
-    private Instant publishedDate;
-    private Integer pageCount;
+    private String name;
+    private String email;
+
+    @MappedCollection(idColumn = "id", keyColumn = "address_id")
+    private Address address;
 }
