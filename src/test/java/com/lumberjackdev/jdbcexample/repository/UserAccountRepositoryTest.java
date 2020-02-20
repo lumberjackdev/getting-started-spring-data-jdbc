@@ -1,12 +1,12 @@
 package com.lumberjackdev.jdbcexample.repository;
 
 import com.github.javafaker.Faker;
-import com.lumberjackdev.jdbcexample.domain.Address;
-import com.lumberjackdev.jdbcexample.domain.UserAccount;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import static com.lumberjackdev.jdbcexample.helpers.Stubs.stubAddress;
+import static com.lumberjackdev.jdbcexample.helpers.Stubs.stubUser;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -36,20 +36,16 @@ class UserAccountRepositoryTest {
         assertThat(foundAddress).isEqualTo(savedUser.getAddress());
     }
 
-    private static UserAccount stubUser(Address address) {
-        return UserAccount.builder()
-                .name(faker.superhero().name())
-                .email(faker.internet().emailAddress())
-                .address(address)
-                .build();
-    }
+    @Test
+    void deletingUserDeletesTheirAddress() {
+        var address = stubAddress();
+        var newUser = stubUser(address);
 
-    private static Address stubAddress() {
-        return Address.builder()
-                .city(faker.address().city())
-                .state(faker.address().state())
-                .zipcode(faker.address().zipCode())
-                .street(faker.address().streetAddress())
-                .build();
+        var savedUser = userAccountRepository.save(newUser);
+        var addressId = savedUser.getAddress().getId();
+
+        userAccountRepository.delete(savedUser);
+
+        assertThat(addressRepository.existsById(addressId)).isFalse();
     }
 }
