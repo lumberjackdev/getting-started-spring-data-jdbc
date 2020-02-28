@@ -17,6 +17,6 @@ public class UserAccount implements GeneratedId {
     private String name;
     private String email;
 
-    @MappedCollection(idColumn = "id", keyColumn = "address_id")
+    @MappedCollection(idColumn = "id")
     private Address address;
 }
